@@ -14,9 +14,9 @@ public class Main {
 
     private static final Scanner SCANNER= new Scanner(System.in);
 
-    private static final String RG_DELIMITATION = "[\\s\\.]";
-    private static final String RG_ARTICLE = "([Ee]l)|([lL]((a(s)?)|os))";
-    private static final String REGEX = RG_DELIMITATION + RG_ARTICLE + RG_DELIMITATION ;
+    private static final String RG_DELIMITATION = "\\b";
+    private static final String RG_ARTICLE = "(([Ee]l)|([Ll]((a(s)?)|os)))";
+    private static final String REGEX = RG_DELIMITATION + RG_ARTICLE + RG_DELIMITATION;
 
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
