@@ -1,4 +1,4 @@
-package regexTutorial;
+package regex.wordExtractor;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by garciparedes on 16/02/16.
  */
-public class WordExtractor {
+public class Main {
 
     private static final Scanner SCANNER= new Scanner(System.in);
 
