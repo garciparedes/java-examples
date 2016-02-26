@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * Created by garciparedes on 25/02/16.
  *
  */
-public class Main {
+public class ArticleUpper {
 
 
     /**
