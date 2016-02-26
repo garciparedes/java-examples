@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by garciparedes on 16/02/16.
  */
-public class TextStats {
+public class WordExtractor {
 
     private static final Scanner SCANNER= new Scanner(System.in);
 
