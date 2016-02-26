@@ -1,4 +1,4 @@
-package regex.articleUpper;
+package regex.textStats;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,9 +14,8 @@ public class Main {
 
     private static final Scanner SCANNER= new Scanner(System.in);
 
-    private static final String RG_DELIMITATION = "\\b";
-    private static final String RG_ARTICLE = "(([Ee]l)|([Ll]((a(s)?)|os)))";
-    private static final String REGEX = RG_DELIMITATION + RG_ARTICLE + RG_DELIMITATION;
+
+    private static final String REGEX = "";
 
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
@@ -36,25 +35,10 @@ public class Main {
         try {
             String text;
             text = new String(Files.readAllBytes(Paths.get(fileRoute)));
-
-            System.out.println(articleToUpperCase(text));
-
+            //TODO Text Stats
         } catch (IOException e) {
             System.out.println(REQUEST_FILE_ROUTE_MESSAGE_NOT_FOUND);
             System.exit(-1);
         }
-    }
-
-    private static String articleToUpperCase(String text) {
-
-        Matcher matcher = PATTERN.matcher(text);
-        StringBuffer s = new StringBuffer();
-
-        while (matcher.find()) {
-            matcher.appendReplacement(s, matcher.group().toUpperCase());
-        }
-        matcher.appendTail(s);
-
-        return s.toString();
     }
 }
