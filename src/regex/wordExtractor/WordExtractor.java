@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class WordExtractor {
 
-    private static final String REGEX = "\\s+";
+    private static final String REGEX = "\\w+";
 
     public static void main(String[] args) {
 
@@ -26,7 +26,8 @@ public class WordExtractor {
         try {
             String text;
             text = new String(Files.readAllBytes(Paths.get(filePath)));
-            Matcher matcher = (Pattern.compile(REGEX, Pattern.UNICODE_CASE)).matcher(text);
+            Matcher matcher = Pattern.compile(REGEX, Pattern.UNICODE_CHARACTER_CLASS)
+                    .matcher(text);
 
             while (matcher.find()) {
                 printLine(9999999999L, matcher.group());
