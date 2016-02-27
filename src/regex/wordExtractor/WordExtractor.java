@@ -1,5 +1,8 @@
 package regex.wordExtractor;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,24 +12,35 @@ import java.util.regex.Pattern;
  */
 public class WordExtractor {
 
-    private static final Scanner SCANNER= new Scanner(System.in);
-
-    private static final String REGEX = "\\S+";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
+    private static final String REGEX = "\\s+";
 
     public static void main(String[] args) {
 
-        Matcher matcher = PATTERN.matcher(SCANNER.nextLine());
-        boolean found = false;
-        while (matcher.find()) {
-            System.out.printf("%s on (%d,%d)%n",
-                    matcher.group(),
-                    matcher.start(),
-                    matcher.end());
-            found = true;
+        String filePath;
+        if (args.length == 1){
+            filePath = args[0];
+        } else {
+            filePath = (new Scanner(System.in)).nextLine();
         }
-        if (!found) {
-            System.out.printf("NOT FOUND%n");
+
+        try {
+            String text;
+            text = new String(Files.readAllBytes(Paths.get(filePath)));
+            Matcher matcher = (Pattern.compile(REGEX, Pattern.UNICODE_CASE)).matcher(text);
+
+            while (matcher.find()) {
+                printLine(9999999999L, matcher.group());
+            }
+            System.exit(0);
+
+        } catch (IOException e) {
+            System.exit(-1);
         }
+
+    }
+
+    private static void printLine(long count, String word){
+        System.out.printf("%10d\t%s\n",
+                count, word);
     }
 }
