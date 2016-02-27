@@ -1,9 +1,13 @@
 package regex.wordExtractor;
 
+
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.*;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,16 +28,12 @@ public class WordExtractor {
         }
 
         try {
-            TreeMap<String, Long> map= new TreeMap<>();
+
             String text;
             text = new String(Files.readAllBytes(Paths.get(filePath)));
-            Matcher matcher = Pattern.compile(REGEX, Pattern.UNICODE_CHARACTER_CLASS)
-                    .matcher(text);
 
-            while (matcher.find()) {
-                map.put(matcher.group().toLowerCase(),
-                        map.getOrDefault(matcher.group(), 0L) + 1);
-            }
+            Map<String, Integer> map= regex(text);
+
             printMap(map);
 
             System.exit(0);
@@ -43,17 +43,57 @@ public class WordExtractor {
         }
 
     }
-    public static void printMap(Map<String, Long> mp) {
-        Iterator<Map.Entry<String, Long>> it = mp.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Long> pair = it.next();
-            printLine(pair.getValue(), pair.getKey());
-            it.remove();
+
+    private static Map<String, Integer> regex(String text){
+        Map<String, Integer> map= new HashMap<>();
+
+        Matcher matcher = Pattern.compile(REGEX, Pattern.UNICODE_CHARACTER_CLASS)
+                .matcher(text);
+
+        while (matcher.find()) {
+            map.put(matcher.group().toLowerCase(),
+                    map.getOrDefault(matcher.group(), 0) + 1);
+        }
+        return map;
+    }
+
+
+    public static void printMap(Map<String, Integer> mp) {
+        List<Map.Entry<String, Integer>> a = new ArrayList<>(mp.entrySet());
+
+        Collections.sort(a, new ValueComparator());
+
+        /*
+        for (int i = 0; i < a.size(); i++){
+            printLine(a.get(i).getValue(), a.get(i).getKey());
+        }
+        */
+
+        for (int i = 0; i < 20; i++){
+            printLine(a.get(i).getValue(), a.get(i).getKey());
         }
     }
+
+
 
     private static void printLine(long count, String word){
         System.out.printf("%10d\t%s\n",
                 count, word);
+    }
+
+
+
+    private static class ValueComparator implements Comparator<Map.Entry<String, Integer>> {
+
+        @Override
+        public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+            if (o1.getValue() < o2.getValue()){
+                return 1;
+            } else if (o1.getValue().equals(o2.getValue())){
+                return 0;
+            } else {
+                return -1;
+            }
+        }
     }
 }
