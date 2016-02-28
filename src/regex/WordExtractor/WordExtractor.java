@@ -1,16 +1,15 @@
-package regex.textStats;
+package regex.WordExtractor;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by garciparedes on 25/02/16.
  */
-public class TextStats {
+public class WordExtractor {
 
     private static final Scanner SCANNER= new Scanner(System.in);
 

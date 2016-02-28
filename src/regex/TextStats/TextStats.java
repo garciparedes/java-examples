@@ -1,4 +1,4 @@
-package regex.wordExtractor;
+package regex.textStats;
 
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  *
  * Created by garciparedes on 16/02/16.
  */
-public class WordExtractor {
+public class TextStats {
 
 
     /**
@@ -84,7 +84,7 @@ public class WordExtractor {
         
         /**
          * Abrimos el fichero a convertir y después se invoca la
-         * funcion textStats() con el contenido del fichero como argumento.
+         * funcion WordExtractor() con el contenido del fichero como argumento.
          *
          * En el caso de que haya un problema al abrir el fichero
          * se muestra un mensaje de error y el programa termina.
@@ -104,7 +104,7 @@ public class WordExtractor {
 
 
     /**
-     * Metodo textStats()
+     * Metodo WordExtractor()
      *
      * Se encarga de analizar las apariciones de
      * caracteres y palabras del texto enviado como argumento.
