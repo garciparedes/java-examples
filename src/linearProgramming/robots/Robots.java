@@ -44,6 +44,7 @@ public class Robots {
      *  Ci: Nº de robots que se compran en el trimestre i.   1 <= i <= 4
      *  Vi: Nº de robots que se venden en el trimestre i.   1 <= i <= 4
      *  Fi: Nº de frigoríficos que se fabrican en el trimestre i.   1 <= i <= 4
+     *  Ai: Nº de frigoríficos que se almacenan en el trimestre i.   1 <= i <= 4
      *  Di: Nº de robots que se fabrican de menos en el trimestre i.   1 <= i <= 3
      *          Nota: Di es hasta 3 para no dejar robots sin fabricar al final
      *          del último trimestre.
@@ -54,6 +55,7 @@ public class Robots {
             V1 = "v1",V2 = "v2", V3 = "v3" , V4 = "v4",
             R1 = "r1",R2 = "r2", R3 = "r3" , R4 = "r4",
             F1 = "f1",F2 = "f2", F3 = "f3" , F4 = "f4",
+            A1 = "a1",A2 = "a2", A3 = "a3" , A4 = "a4",
             D1 = "d1",D2 = "d2", D3 = "d3"
     ;
 
@@ -86,24 +88,17 @@ public class Robots {
         linearPr.setMinProblem(true);
         linearPr.setAllVariablesInteger();
 
+
         /**
          *
          * Definicion de la funcion objetivo.
          *
          */
-        linearPr.plus(C1,5000.0).plus(C2,5000.0).plus(C3,5000.0).plus(C4,5000.0)
-                .plus(V1,-3000.0).plus(V2,-3000.0).plus(V3,-3000.0).plus(V4,-3000.0)
-                .plus(R1,500.0).plus(R2,500.0).plus(R3,500.0).plus(R4,500.0)
-                .plus(F1,20.0).plus(F2,20.0).plus(F3,20.0).plus(F4,20.0)
-                .plus(D1,30.0).plus(D2,30.0).plus(D3,30.0);
+        linearPr.plus(C1,5000.0).plus(V1,-3000.0).plus(R1,500.0).plus(A1,20.0).plus(D1,30.0)
+                .plus(C2,5000.0).plus(V2,-3000.0).plus(R2,500.0).plus(A2,20.0).plus(D2,30.0)
+                .plus(C3,5000.0).plus(V3,-3000.0).plus(R3,500.0).plus(A3,20.0).plus(D3,30.0)
+                .plus(C4,5000.0).plus(V4,-3000.0).plus(R4,500.0).plus(A4,20.0);
 
-        /**
-         *
-         * Restriccion del numero de robots en el
-         * ultimo trimestre.
-         *
-         */
-        linearPr.addConstraint("res5",2,"<=").plus(R4);
 
         /**
          *
@@ -119,6 +114,15 @@ public class Robots {
         linearPr.addConstraint("res2",0,"=").plus(R2).plus(V2).plus(C2,-1.0).plus(R1,-1.0);
         linearPr.addConstraint("res3",0,"=").plus(R3).plus(V3).plus(C3,-1.0).plus(R2,-1.0);
         linearPr.addConstraint("res4",0,"=").plus(R4).plus(V4).plus(C4,-1.0).plus(R3,-1.0);
+
+
+        /**
+         *
+         * Restriccion del numero de robots en el
+         * ultimo trimestre.
+         *
+         */
+        linearPr.addConstraint("res5",2,"<=").plus(R4);
 
 
         /**
@@ -151,10 +155,10 @@ public class Robots {
          * que se deben produccir cada trimestre.
          *
          */
-        linearPr.addConstraint("res14",600,"=").plus(F1).plus(D1);
-        linearPr.addConstraint("res15",800,"=").plus(F2).plus(D2).plus(D1,-1.0);
-        linearPr.addConstraint("res16",500,"=").plus(F3).plus(D3).plus(D2,-1.0);
-        linearPr.addConstraint("res17",400,"=").plus(F4).plus(D3,-1.0);
+        linearPr.addConstraint("res14",600,"=").plus(F1).plus(D1)                       .plus(A1,-1.0);
+        linearPr.addConstraint("res15",800,"=").plus(F2).plus(D2).plus(D1,-1.0).plus(A1).plus(A2,-1.0);
+        linearPr.addConstraint("res16",500,"=").plus(F3).plus(D3).plus(D2,-1.0).plus(A2).plus(A3,-1.0);
+        linearPr.addConstraint("res17",400,"=").plus(F4)         .plus(D3,-1.0).plus(A3);
 
 
         /**
@@ -186,6 +190,12 @@ public class Robots {
         linearPr.addConstraint("res34",0,"<=").plus(D1);
         linearPr.addConstraint("res35",0,"<=").plus(D2);
         linearPr.addConstraint("res36",0,"<=").plus(D3);
+
+        linearPr.addConstraint("res37",0,"<=").plus(A1);
+        linearPr.addConstraint("res38",0,"<=").plus(A2);
+        linearPr.addConstraint("res39",0,"<=").plus(A3);
+        linearPr.addConstraint("res40",0,"<=").plus(A4);
+
 
         /**
          *
