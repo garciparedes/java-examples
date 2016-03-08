@@ -40,19 +40,19 @@ public class Robots {
      *
      * Variables de decisión del problema.
      *
-     *  Ri: Nº total de robots que se tienen en el periodo i.   1 <= i <= 4
-     *  Ci: Nº de robots que se compran en el periodo i.   1 <= i <= 4
-     *  Vi: Nº de robots que se venden en el periodo i.   1 <= i <= 4
-     *  Fi: Nº de frigoríficos que se fabrican en el periodo i.   1 <= i <= 4
-     *  Di: Nº de robots que se fabrican de menos en el periodo i.   1 <= i <= 3
+     *  Ri: Nº de robots que se tienen en el trimestre i.   1 <= i <= 4
+     *  Ci: Nº de robots que se compran en el trimestre i.   1 <= i <= 4
+     *  Vi: Nº de robots que se venden en el trimestre i.   1 <= i <= 4
+     *  Fi: Nº de frigoríficos que se fabrican en el trimestre i.   1 <= i <= 4
+     *  Di: Nº de robots que se fabrican de menos en el trimestre i.   1 <= i <= 3
      *          Nota: Di es hasta 3 para no dejar robots sin fabricar al final
-     *          del último periodo.
+     *          del último trimestre.
      *
      */
     private static final String
             C1 = "c1",C2 = "c2", C3 = "c3" , C4 = "c4",
             V1 = "v1",V2 = "v2", V3 = "v3" , V4 = "v4",
-            R1 = "r1",R2 = "e2", R3 = "r3" , R4 = "r4",
+            R1 = "r1",R2 = "r2", R3 = "r3" , R4 = "r4",
             F1 = "f1",F2 = "f2", F3 = "f3" , F4 = "f4",
             D1 = "d1",D2 = "d2", D3 = "d3"
     ;
