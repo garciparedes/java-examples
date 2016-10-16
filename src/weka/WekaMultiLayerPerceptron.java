@@ -3,6 +3,7 @@ package weka;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instances;
+import weka.core.Utils;
 import weka.core.converters.CSVLoader;
 
 import java.io.*;
@@ -16,29 +17,39 @@ public class WekaMultiLayerPerceptron {
         try {
 
             String filepath = "./dataset/ojo-seco.csv";
-
+            double percent = 66;
 
             CSVLoader loader = new CSVLoader();
             loader.setSource(new File(filepath));
 
             Instances data = loader.getDataSet();
-
             data.setClassIndex(data.numAttributes() - 1);
+
+
+            int trainSize = (int) Math.round(data.numInstances() * percent / 100);
+            int testSize = data.numInstances() - trainSize;
+
+            Instances train = new Instances(data, 0, trainSize);
+            Instances test = new Instances(data, trainSize, testSize);
+
+
+            System.out.println(data.toSummaryString());
 
 
             MultilayerPerceptron mlp = new MultilayerPerceptron();
 
             //Setting Parameters
-            mlp.setLearningRate(0.1);
-            mlp.setMomentum(0.2);
-            mlp.setTrainingTime(2000);
-            mlp.setHiddenLayers("3");
-            mlp.buildClassifier(data);
+            mlp.setOptions(Utils.splitOptions("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a"));
 
-            Evaluation eval = new Evaluation(data);
-            eval.evaluateModel(mlp, data);
+            mlp.buildClassifier(train);
 
-            System.out.println(eval.errorRate()); //Printing Training Mean root squared Error
+            System.out.println(mlp.toString());
+
+
+
+            Evaluation eval = new Evaluation(test);
+            eval.evaluateModel(mlp, test);
+
             System.out.println(eval.toSummaryString()); //Summary of Training
 
 
