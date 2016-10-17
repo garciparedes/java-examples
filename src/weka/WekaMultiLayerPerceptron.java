@@ -14,35 +14,37 @@ import java.io.*;
  */
 public class WekaMultiLayerPerceptron {
 
+    private static final String OJOSECO_FILEPATH = "./dataset/ojo-seco.csv";
+    private static final double RATIO_TEST = 0.66;
+
     public static void main(String[] args) {
         try {
 
-            String filepath = "./dataset/ojo-seco.csv";
-            double percent = 66;
 
             CSVLoader loader = new CSVLoader();
-            loader.setSource(new File(filepath));
+            loader.setSource(new File(OJOSECO_FILEPATH));
+
+
 
             Instances data = loader.getDataSet();
             data.setClassIndex(data.numAttributes() - 1);
+
+            System.out.println(data.toSummaryString());
+
+
+
             data.randomize(new Random(0));
 
-
-            int trainSize = (int) Math.round(data.numInstances() * percent / 100);
+            int trainSize = Math.toIntExact(Math.round(data.numInstances() * RATIO_TEST));
             int testSize = data.numInstances() - trainSize;
 
             Instances train = new Instances(data, 0, trainSize);
             Instances test = new Instances(data, trainSize, testSize);
 
 
-            System.out.println(data.toSummaryString());
-
 
             MultilayerPerceptron mlp = new MultilayerPerceptron();
-
-            //Setting Parameters
             mlp.setOptions(Utils.splitOptions("-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a"));
-
             mlp.buildClassifier(train);
 
             System.out.println(mlp.toString());
@@ -52,7 +54,7 @@ public class WekaMultiLayerPerceptron {
             Evaluation eval = new Evaluation(test);
             eval.evaluateModel(mlp, test);
 
-            System.out.println(eval.toSummaryString()); //Summary of Training
+            System.out.println(eval.toSummaryString());
 
 
         } catch (Exception e) {
