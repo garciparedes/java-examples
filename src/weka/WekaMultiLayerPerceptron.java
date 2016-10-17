@@ -6,6 +6,7 @@ import weka.core.Instances;
 import weka.core.Utils;
 import weka.core.converters.CSVLoader;
 
+import java.util.Random;
 import java.io.*;
 
 /**
@@ -24,6 +25,7 @@ public class WekaMultiLayerPerceptron {
 
             Instances data = loader.getDataSet();
             data.setClassIndex(data.numAttributes() - 1);
+            data.randomize(new Random(0));
 
 
             int trainSize = (int) Math.round(data.numInstances() * percent / 100);
