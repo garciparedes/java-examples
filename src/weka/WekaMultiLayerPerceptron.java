@@ -6,6 +6,10 @@ import weka.core.Instances;
 import weka.core.Utils;
 import weka.core.converters.CSVLoader;
 
+
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Normalize;
+
 import java.util.Random;
 import java.io.*;
 
@@ -27,6 +31,11 @@ public class WekaMultiLayerPerceptron {
 
 
             Instances data = loader.getDataSet();
+
+            Normalize normalize = new Normalize();
+            normalize.setInputFormat(data);
+            data = Filter.useFilter(data, normalize);
+
             data.setClassIndex(data.numAttributes() - 1);
 
             System.out.println(data.toSummaryString());
