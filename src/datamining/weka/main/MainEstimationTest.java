@@ -1,4 +1,4 @@
-package datamining.weka.proofs;
+package datamining.weka.main;
 
 import datamining.weka.estimation.EstimatorClassifiersSet;
 import datamining.weka.estimation.cross.CrossValidation;
