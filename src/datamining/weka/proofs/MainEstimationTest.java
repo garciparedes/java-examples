@@ -1,16 +1,15 @@
 package datamining.weka.proofs;
 
-import datamining.weka.estimation.HoldOut;
+import datamining.weka.estimation.cross.CrossValidation;
+import datamining.weka.estimation.split.HoldOut;
+import datamining.weka.estimation.cross.LeaveOneOut;
 import datamining.weka.util.DataImport;
 
 
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.LibSVM;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.trees.J48;
 import weka.core.Instances;
-import weka.core.SelectedTag;
-import weka.core.Utils;
 
 /**
  * Created by garciparedes on 03/11/2016.
@@ -28,33 +27,61 @@ public class MainEstimationTest {
 
 
 
-            J48 j48 = new J48();
-
-            NaiveBayes naiveBayes = new NaiveBayes();
-
-            IBk iBk3 = new IBk(3);
-
+            /*
             LibSVM svm = new LibSVM();
             svm.setOptions(Utils.splitOptions("-k 0"));
+            */
 
 
+            System.out.println("**********************************************************************");
 
             HoldOut holdOut = new HoldOut(instances, 0.66);
 
-            holdOut.setClassifier(j48);
+            holdOut.setClassifier(new J48());
             System.out.println(holdOut.getEstimationResults());
 
-            holdOut.setClassifier(naiveBayes);
+            holdOut.setClassifier(new NaiveBayes());
             System.out.println(holdOut.getEstimationResults());
 
-            holdOut.setClassifier(iBk3);
+            holdOut.setClassifier(new IBk(3));
             System.out.println(holdOut.getEstimationResults());
 
-            holdOut.setClassifier(svm);
-            System.out.println(holdOut.getEstimationResults());
+            //holdOut.setClassifier(svm);
+            //System.out.println(holdOut.getEstimationResults());
+            System.out.println("**********************************************************************");
+
+
+            CrossValidation crossValidation = new CrossValidation(instances, 10);
+
+            crossValidation.setClassifier(new J48());
+            System.out.println(crossValidation.getEstimationResults());
+
+            crossValidation.setClassifier(new NaiveBayes());
+            System.out.println(crossValidation.getEstimationResults());
+
+            crossValidation.setClassifier(new IBk(3));
+            System.out.println(crossValidation.getEstimationResults());
+
+            //crossValidation.setClassifier(svm);
+            //System.out.println(crossValidation.getEstimationResults());
+            System.out.println("**********************************************************************");
 
 
 
+            LeaveOneOut leaveOneOut = new LeaveOneOut(instances);
+
+            leaveOneOut.setClassifier(new J48());
+            System.out.println(leaveOneOut.getEstimationResults());
+
+            leaveOneOut.setClassifier(new NaiveBayes());
+            System.out.println(leaveOneOut.getEstimationResults());
+
+            leaveOneOut.setClassifier(new IBk(3));
+            System.out.println(leaveOneOut.getEstimationResults());
+
+            //leaveOneOut.setClassifier(svm);
+            //System.out.println(leaveOneOut.getEstimationResults());
+            System.out.println("**********************************************************************");
         } catch (Exception e) {
             e.printStackTrace();
         }

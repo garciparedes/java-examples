@@ -9,7 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="GLPKSolverPack" level="project" />
     <orderEntry type="library" name="SCPSolver" level="project" />
-    <orderEntry type="library" name="libsvm" level="project" />
     <orderEntry type="library" name="weka-3.7.0" level="project" />
+    <orderEntry type="library" name="libsvm" level="project" />
   </component>
 </module>
