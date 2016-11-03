@@ -1,6 +1,7 @@
 package datamining.weka.proofs;
 
 import datamining.weka.estimation.cross.CrossValidation;
+import datamining.weka.estimation.split.Bootstrap;
 import datamining.weka.estimation.split.HoldOut;
 import datamining.weka.estimation.cross.LeaveOneOut;
 import datamining.weka.util.DataImport;
@@ -82,6 +83,24 @@ public class MainEstimationTest {
             //leaveOneOut.setClassifier(svm);
             //System.out.println(leaveOneOut.getEstimationResults());
             System.out.println("**********************************************************************");
+
+
+            Bootstrap bootstrap = new Bootstrap(instances);
+
+            bootstrap.setClassifier(new J48());
+            System.out.println(bootstrap.getEstimationResults());
+
+            bootstrap.setClassifier(new NaiveBayes());
+            System.out.println(bootstrap.getEstimationResults());
+
+            bootstrap.setClassifier(new IBk(3));
+            System.out.println(bootstrap.getEstimationResults());
+
+            //bootstrap.setClassifier(svm);
+            //System.out.println(bootstrap.getEstimationResults());
+            System.out.println("**********************************************************************");
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

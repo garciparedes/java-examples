@@ -8,7 +8,7 @@ import weka.core.Instances;
 public class LeaveOneOut extends CrossValidation{
 
 
-    
+
     public LeaveOneOut(Instances instances) {
         super(instances, instances.numInstances());
     }
