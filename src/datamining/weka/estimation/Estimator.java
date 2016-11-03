@@ -17,9 +17,6 @@ public abstract class Estimator {
     private Instances instances;
 
 
-    private Instances trainInstances;
-    private Instances testInstances;
-
     public Estimator(Instances instances) {
         this.instances = instances;
         this.instances.randomize(new Random(0));
@@ -30,8 +27,6 @@ public abstract class Estimator {
         this(instances);
         this.classifier = classifier;
     }
-
-    protected abstract void splitInstances();
 
 
     public Classifier getClassifier() {
@@ -56,28 +51,11 @@ public abstract class Estimator {
 
 
     public String getEstimationResults(){
-        this.splitInstances();
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.getClassifier().toString());
         stringBuilder.append(this.estimate().toSummaryString());
 
         return stringBuilder.toString();
-    }
-
-    public Instances getTrainInstances() {
-        return trainInstances;
-    }
-
-    public void setTrainInstances(Instances trainInstances) {
-        this.trainInstances = trainInstances;
-    }
-
-    public Instances getTestInstances() {
-        return testInstances;
-    }
-
-    public void setTestInstances(Instances testInstances) {
-        this.testInstances = testInstances;
     }
 }

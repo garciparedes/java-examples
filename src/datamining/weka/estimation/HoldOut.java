@@ -11,6 +11,9 @@ public class HoldOut extends Estimator {
 
     private double splitRate;
 
+    private Instances trainInstances;
+    private Instances testInstances;
+
     public HoldOut(Instances instances, double splitRate) {
         super(instances);
         this.splitRate = splitRate;
@@ -23,7 +26,25 @@ public class HoldOut extends Estimator {
     }
 
 
-    @Override
+
+    public Instances getTrainInstances() {
+        return trainInstances;
+    }
+
+    public void setTrainInstances(Instances trainInstances) {
+        this.trainInstances = trainInstances;
+    }
+
+    public Instances getTestInstances() {
+        return testInstances;
+    }
+
+    public void setTestInstances(Instances testInstances) {
+        this.testInstances = testInstances;
+    }
+
+    
+
     protected void splitInstances() {
         int trainSize = Math.toIntExact(Math.round(this.getInstances().numInstances() * this.splitRate));
         int testSize = this.getInstances().numInstances() - trainSize;
@@ -34,6 +55,7 @@ public class HoldOut extends Estimator {
 
     @Override
     public Evaluation estimate() {
+        this.splitInstances();
 
         try {
             this.getClassifier().buildClassifier(this.getTrainInstances());
