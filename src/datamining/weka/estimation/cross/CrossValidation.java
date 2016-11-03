@@ -23,16 +23,24 @@ public class CrossValidation extends AbstractEstimator {
     }
 
 
+    private int getFolds() {
+        return folds;
+    }
+
 
     @Override
     public double getErrorPercent() {
         try {
-            Evaluation eval = new Evaluation(this.getInstances());
-            eval.crossValidateModel(this.getClassifier(), this.getInstances(),this.folds, new Random());
+            Evaluation eval = new Evaluation(getInstances());
+
+            eval.crossValidateModel(getClassifier(), getInstances(),
+                    getFolds(), new Random()
+            );
+
             return eval.pctIncorrect();
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            return 100;
         }
     }
 }

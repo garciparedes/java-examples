@@ -2,6 +2,7 @@ package datamining.weka.estimation.split;
 
 import datamining.weka.estimation.AbstractEstimator;
 import weka.classifiers.Evaluation;
+import weka.classifiers.trees.adtree.ReferenceInstances;
 import weka.core.Instances;
 
 /**
@@ -21,14 +22,39 @@ public class HoldOut extends AbstractSplitEstimator {
     }
 
 
+    public double getSplitRate() {
+        return splitRate;
+    }
+
 
 
     @Override
     protected void splitInstances() {
-        int trainSize = Math.toIntExact(Math.round(this.getInstances().numInstances() * this.splitRate));
-        int testSize = this.getInstances().numInstances() - trainSize;
+        int trainSize = Math.toIntExact(
+                Math.round(getNumInstances() * getSplitRate())
+        );
 
-        this.setTrainInstances( new Instances(this.getInstances(), 0, trainSize) );
-        this.setTestInstances( new Instances(this.getInstances(), trainSize, testSize) );
+        ReferenceInstances selectedInstances = new ReferenceInstances(
+                getInstances(),
+                trainSize
+        );
+
+        ReferenceInstances unselectedInstances = new ReferenceInstances(
+                getInstances(),
+                getNumInstances() - trainSize
+        );
+
+
+        for (int i = 0; i < trainSize; i ++){
+            selectedInstances.addReference(getInstance(i));
+        }
+
+
+        for (int i = trainSize; i < getNumInstances(); i ++){
+            unselectedInstances.addReference(getInstance(i));
+        }
+
+        this.setTrainInstances( selectedInstances );
+        this.setTestInstances( unselectedInstances );
     }
 }

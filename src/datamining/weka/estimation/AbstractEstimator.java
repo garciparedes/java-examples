@@ -1,6 +1,7 @@
 package datamining.weka.estimation;
 
 import weka.classifiers.Classifier;
+import weka.core.Instance;
 import weka.core.Instances;
 
 import java.util.Random;
@@ -42,8 +43,18 @@ public abstract class AbstractEstimator {
 
 
 
-    public void setInstances(Instances instances) {
-        this.instances = instances;
+    protected Instance getInstance(int i) {
+        return getInstances().instance(i);
+    }
+
+
+
+    protected int getNumInstances(){
+        return getInstances().numInstances();
+    }
+
+    private String getClassifierName(){
+        return this.getClassifier().getClass().getSimpleName();
     }
 
 
@@ -54,21 +65,8 @@ public abstract class AbstractEstimator {
 
     public String getEstimationResults(){
 
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Estimation Method: ");
-        sb.append(this.getClass().getSimpleName());
-        sb.append("\n");
-
-        sb.append("Classifier: ");
-        sb.append(this.getClassifier().getClass().getSimpleName());
-        sb.append("\n");
-
-        sb.append("Error Tase: ");
-        sb.append(this.getErrorPercent() );
-        sb.append(" %");
-        sb.append("\n");
-
-        return sb.toString();
+        return "Estimation Method: " + this.getClass().getSimpleName() + "\n" +
+                "Classifier: " + getClassifierName() + "\n" +
+                "Error Tase: " + this.getErrorPercent() + " %" + "\n";
     }
 }
