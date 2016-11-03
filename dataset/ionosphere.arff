@@ -45,12 +45,12 @@
 %
 %   Received signals were processed using an autocorrelation function whose
 %   arguments are the time of a pulse and the pulse number.  There were 17
-%   pulse numbers for the Goose Bay system.  Instances in this databse are
+%   pulse numbers for the Goose Bay system.  DataImport in this databse are
 %   described by 2 attributes per pulse number, corresponding to the complex
 %   values returned by the function resulting from the complex electromagnetic
 %   signal.
 %
-%5. Number of Instances: 351
+%5. Number of DataImport: 351
 %
 %6. Number of Attributes: 34 plus the class attribute
 %   -- All 34 predictor attributes are continuous

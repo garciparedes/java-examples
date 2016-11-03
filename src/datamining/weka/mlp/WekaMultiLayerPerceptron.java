@@ -1,4 +1,4 @@
-package weka;
+package datamining.weka.mlp;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
