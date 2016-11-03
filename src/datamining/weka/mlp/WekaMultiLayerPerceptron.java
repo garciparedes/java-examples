@@ -1,5 +1,6 @@
 package datamining.weka.mlp;
 
+import datamining.weka.util.DataImport;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instances;

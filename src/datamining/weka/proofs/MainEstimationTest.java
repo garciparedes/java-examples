@@ -1,5 +1,6 @@
 package datamining.weka.proofs;
 
+import datamining.weka.estimation.EstimatorClassifiersSet;
 import datamining.weka.estimation.cross.CrossValidation;
 import datamining.weka.estimation.split.Bootstrap;
 import datamining.weka.estimation.split.HoldOut;
@@ -26,79 +27,38 @@ public class MainEstimationTest {
             Instances instances = DataImport.getInstancesFromARFF(IONOSPHERE_FILEPATH);
             instances.setClassIndex(instances.numAttributes() - 1);
 
-
-
             /*
             LibSVM svm = new LibSVM();
             svm.setOptions(Utils.splitOptions("-k 0"));
             */
 
 
-            System.out.println("**********************************************************************");
-
-            HoldOut holdOut = new HoldOut(instances, 0.66);
-
-            holdOut.setClassifier(new J48());
-            System.out.println(holdOut.getEstimationResults());
-
-            holdOut.setClassifier(new NaiveBayes());
-            System.out.println(holdOut.getEstimationResults());
-
-            holdOut.setClassifier(new IBk(3));
-            System.out.println(holdOut.getEstimationResults());
-
-            //holdOut.setClassifier(svm);
-            //System.out.println(holdOut.getEstimationResults());
-            System.out.println("**********************************************************************");
+            EstimatorClassifiersSet holdOutSet =
+                    new EstimatorClassifiersSet(new HoldOut(instances, 0.66),
+                            new J48(), new NaiveBayes(), new IBk(3)
+                    );
+            System.out.println(holdOutSet.getClassifiersErrors());
 
 
-            CrossValidation crossValidation = new CrossValidation(instances, 10);
-
-            crossValidation.setClassifier(new J48());
-            System.out.println(crossValidation.getEstimationResults());
-
-            crossValidation.setClassifier(new NaiveBayes());
-            System.out.println(crossValidation.getEstimationResults());
-
-            crossValidation.setClassifier(new IBk(3));
-            System.out.println(crossValidation.getEstimationResults());
-
-            //crossValidation.setClassifier(svm);
-            //System.out.println(crossValidation.getEstimationResults());
-            System.out.println("**********************************************************************");
+            EstimatorClassifiersSet crossValidationSet =
+                    new EstimatorClassifiersSet(new CrossValidation(instances, 10),
+                            new J48(), new NaiveBayes(), new IBk(3)
+                    );
+            System.out.println(crossValidationSet.getClassifiersErrors());
 
 
-
-            LeaveOneOut leaveOneOut = new LeaveOneOut(instances);
-
-            leaveOneOut.setClassifier(new J48());
-            System.out.println(leaveOneOut.getEstimationResults());
-
-            leaveOneOut.setClassifier(new NaiveBayes());
-            System.out.println(leaveOneOut.getEstimationResults());
-
-            leaveOneOut.setClassifier(new IBk(3));
-            System.out.println(leaveOneOut.getEstimationResults());
-
-            //leaveOneOut.setClassifier(svm);
-            //System.out.println(leaveOneOut.getEstimationResults());
-            System.out.println("**********************************************************************");
+            EstimatorClassifiersSet leaveOneOutSet =
+                    new EstimatorClassifiersSet(new LeaveOneOut(instances),
+                            new J48(), new NaiveBayes(), new IBk(3)
+                    );
+            System.out.println(leaveOneOutSet.getClassifiersErrors());
 
 
-            Bootstrap bootstrap = new Bootstrap(instances);
-
-            bootstrap.setClassifier(new J48());
-            System.out.println(bootstrap.getEstimationResults());
-
-            bootstrap.setClassifier(new NaiveBayes());
-            System.out.println(bootstrap.getEstimationResults());
-
-            bootstrap.setClassifier(new IBk(3));
-            System.out.println(bootstrap.getEstimationResults());
-
-            //bootstrap.setClassifier(svm);
-            //System.out.println(bootstrap.getEstimationResults());
-            System.out.println("**********************************************************************");
+            EstimatorClassifiersSet bootstrapSet =
+                    new EstimatorClassifiersSet(new Bootstrap(instances),
+                            new J48(), new NaiveBayes(), new IBk(3)
+                    );
+            System.out.println(bootstrapSet.getClassifiersErrors());
 
 
         } catch (Exception e) {
