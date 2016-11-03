@@ -1,66 +1,48 @@
 package stats.sampling;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by garciparedes on 03/11/2016.
  */
-public class SamplingWithReplacement<E> {
+public class SamplingWithReplacement<E> extends AbstractSampling{
 
-    private List<E> samples;
-    private int selection;
-    private Random random;
 
-    private List<E> selectedSamples;
-    private List<E> unselectedSamples;
 
-    public SamplingWithReplacement(List<E> samples, int selection){
-        this.samples = samples;
-        this.selection = selection;
 
-        this.doSampling();
+    public SamplingWithReplacement(int selection, List<E> samples){
+        super(selection, samples);
     }
 
-    private void doSampling() {
+    public SamplingWithReplacement(int selection, E[] samples){
+        this(selection, Arrays.asList(samples));
+    }
 
-       this.clear();
+
+    @Override
+    protected void doSampling() {
+
+       clear();
+
+        List<Integer> selected = new ArrayList<>(getSelection());
 
         for (int i = 0; i < getSelection(); i++){
-            getSelectedSamples().add(getSamples().get(getRandom().nextInt(getSelection())));
+            selected.add(getRandom().nextInt(getSamplesSize()));
+        }
+
+
+        for (int i = 0, fr; i < getSamplesSize(); i++) {
+            if ((fr = Collections.frequency(selected, i)) > 0) {
+
+                for (int j = 0; j < fr; j++) {
+                    addSelectedSample(getSample(i));
+                }
+
+            } else {
+                addUnselectedSample(getSample(i));
+            }
+
         }
     }
 
-
-
-
-
-    private void clear(){
-        this.getSelectedSamples().clear();
-        this.getUnselectedSamples().clear();
-    }
-
-    private Random getRandom() {
-        return this.random;
-    }
-
-
-    public List<E> getSamples(){
-        return this.samples;
-    }
-
-
-    public List<E> getSelectedSamples(){
-        return this.selectedSamples;
-    }
-
-
-
-    public List<E> getUnselectedSamples() {
-        return this.unselectedSamples;
-    }
-
-    public int getSelection() {
-        return selection;
-    }
 }
