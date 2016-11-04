@@ -1,27 +1,23 @@
-package datamining.weka.estimation;
+package datamining.weka.wrapper;
 
-import datamining.weka.estimation.split.Bootstrap;
+import datamining.weka.estimation.AbstractEstimator;
 import weka.classifiers.Classifier;
-import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.lazy.IBk;
-import weka.classifiers.trees.J48;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by garciparedes on 03/11/2016.
  */
-public class EstimatorClassifiersSet {
+public class EstimatorClassifiersWrapper {
 
 
 
-    AbstractEstimator estimator;
-    List<Classifier> classifiers;
+    private AbstractEstimator estimator;
+    private List<Classifier> classifiers;
 
-    public EstimatorClassifiersSet(AbstractEstimator estimator,
-                                   Classifier... classifiers){
+    public EstimatorClassifiersWrapper(AbstractEstimator estimator,
+                                       Classifier... classifiers){
         this.estimator = estimator;
         this. classifiers = Arrays.asList(classifiers);
     }
@@ -44,9 +40,11 @@ public class EstimatorClassifiersSet {
         String string = "";
 
         string += ("**********************************************************************\n");
+        string += getEstimator().getEstimatorName() + "\n";
+        string += ("**********************************************************************\n");
         for(Classifier classifier: getClassifiers()){
             getEstimator().setClassifier(classifier);
-            string += getEstimator().getEstimationResults();
+            string += getEstimator().getClassifierEstimationResults();
         }
         string += ("**********************************************************************\n");
         return string;
