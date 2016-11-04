@@ -53,8 +53,12 @@ public abstract class AbstractEstimator {
         return getInstances().numInstances();
     }
 
-    private String getClassifierName(){
-        return this.getClassifier().getClass().getSimpleName();
+    public String getEstimatorName(){
+        return getClass().getSimpleName();
+    }
+
+    public String getClassifierName(){
+        return getClassifier().getClass().getSimpleName();
     }
 
 
@@ -62,11 +66,22 @@ public abstract class AbstractEstimator {
     public abstract double getErrorPercent();
 
 
+    public String getEstimatorEstimationResults(){
 
-    public String getEstimationResults(){
+        return "Estimation Method: " + getEstimatorName() + "\n" +
+                "Error Tase: " + getErrorPercent() + " %" + "\n";
+    }
 
-        return "Estimation Method: " + this.getClass().getSimpleName() + "\n" +
-                "Classifier: " + getClassifierName() + "\n" +
-                "Error Tase: " + this.getErrorPercent() + " %" + "\n";
+    public String getClassifierEstimationResults(){
+
+        return "Classifier: " + getClassifierName() + "\n" +
+                "Error Tase: " + getErrorPercent() + " %" + "\n";
+    }
+
+    public String getDetailedEstimationResults(){
+
+        return "Estimation Method: " + getEstimatorName() + "\n" +
+                "Classifier: " + getEstimatorName() + "\n" +
+                "Error Tase: " + getErrorPercent() + " %" + "\n";
     }
 }
