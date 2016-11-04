@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by garciparedes on 03/11/2016.
  */
-public class SamplingWithoutReplacement <E> extends AbstractSampling{
+public class SamplingWithoutReplacement<E> extends AbstractSampling<E> {
 
 
 
