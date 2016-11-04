@@ -12,13 +12,22 @@ public class MainSampling {
     public static void main(String[] args) {
         Integer[] numbers = loop(100000);
 
-        SamplingWithReplacement<Integer> sampling = new SamplingWithReplacement<>(numbers.length, numbers);
+        SamplingWithReplacement<Integer> sampling =
+                new SamplingWithReplacement<>(numbers.length, numbers);
 
-        System.out.println((double) sampling.getUnselectedSamples().size()/sampling.getSelectedSamples().size());
+        System.out.println(
+                (double) sampling.getUnselectedSamples().size() /
+                (double) sampling.getSelectedSamples().size()
+        );
 
 
-        SamplingWithoutReplacement<Integer> sampling2 = new SamplingWithoutReplacement<>(numbers.length, numbers);
-        System.out.println((double) sampling2.getUnselectedSamples().size()/sampling2.getSelectedSamples().size());
+        SamplingWithoutReplacement<Integer> sampling2 =
+                new SamplingWithoutReplacement<>(numbers.length, numbers);
+
+        System.out.println(
+                (double) sampling2.getUnselectedSamples().size() /
+                (double) sampling2.getSelectedSamples().size()
+        );
     }
 
     public static Integer[] loop(int size) {
