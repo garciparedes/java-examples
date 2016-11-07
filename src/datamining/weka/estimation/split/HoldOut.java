@@ -1,9 +1,12 @@
 package datamining.weka.estimation.split;
 
 import datamining.weka.estimation.AbstractEstimator;
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.trees.adtree.ReferenceInstances;
 import weka.core.Instances;
+
+import java.util.List;
 
 /**
  * Created by garciparedes on 03/11/2016.
@@ -21,12 +24,24 @@ public class HoldOut extends AbstractSplitEstimator {
         this.splitRate = splitRate;
     }
 
+    public HoldOut(Instances instances, double splitRate, Classifier... classifiers) {
+        super(instances, classifiers);
+        this.splitRate = splitRate;
+    }
 
     public double getSplitRate() {
         return splitRate;
     }
 
+    private double getSplitPercent() {
+        return getSplitRate()*100;
+    }
 
+
+    @Override
+    public String getEstimatorName() {
+        return super.getEstimatorName() + " " + getSplitPercent() + " %";
+    }
 
     @Override
     protected void splitInstances() {

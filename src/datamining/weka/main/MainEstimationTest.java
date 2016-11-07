@@ -1,7 +1,7 @@
 package datamining.weka.main;
 
+import datamining.weka.estimation.AbstractEstimator;
 import datamining.weka.wrapper.ClassifierEstimatorsWrapper;
-import datamining.weka.wrapper.EstimatorClassifiersWrapper;
 import datamining.weka.estimation.cross.CrossValidation;
 import datamining.weka.estimation.split.Bootstrap;
 import datamining.weka.estimation.split.HoldOut;
@@ -10,11 +10,9 @@ import datamining.weka.util.DataImport;
 
 
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.LibSVM;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.trees.J48;
 import weka.core.Instances;
-import weka.core.Utils;
 
 /**
  * Created by garciparedes on 03/11/2016.
@@ -36,29 +34,29 @@ public class MainEstimationTest {
             */
 
 
-            EstimatorClassifiersWrapper holdOutSet =
-                    new EstimatorClassifiersWrapper(new HoldOut(instances, 0.66),
+            AbstractEstimator holdOutSet =
+                    new HoldOut(instances, 0.66,
                             new J48(), new NaiveBayes(), new IBk(3)
                     );
             System.out.println(holdOutSet.getClassifiersErrors());
 
 
-            EstimatorClassifiersWrapper crossValidationSet =
-                    new EstimatorClassifiersWrapper(new CrossValidation(instances, 10),
+            AbstractEstimator crossValidationSet =
+                    new CrossValidation(instances, 10,
                             new J48(), new NaiveBayes(), new IBk(3)
                     );
             System.out.println(crossValidationSet.getClassifiersErrors());
 
 
-            EstimatorClassifiersWrapper leaveOneOutSet =
-                    new EstimatorClassifiersWrapper(new LeaveOneOut(instances),
+            AbstractEstimator leaveOneOutSet =
+                    new LeaveOneOut(instances,
                             new J48(), new NaiveBayes(), new IBk(3)
                     );
             System.out.println(leaveOneOutSet.getClassifiersErrors());
 
 
-            EstimatorClassifiersWrapper bootstrapSet =
-                    new EstimatorClassifiersWrapper(new Bootstrap(instances),
+            AbstractEstimator bootstrapSet =
+                    new Bootstrap(instances,
                             new J48(), new NaiveBayes(), new IBk(3)
                     );
             System.out.println(bootstrapSet.getClassifiersErrors());

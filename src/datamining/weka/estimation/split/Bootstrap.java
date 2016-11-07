@@ -1,12 +1,13 @@
 package datamining.weka.estimation.split;
 
-import datamining.weka.estimation.AbstractEstimator;
-import stats.sampling.SamplingWithReplacement;
+import weka.classifiers.Classifier;
 import weka.classifiers.trees.adtree.ReferenceInstances;
-import weka.core.Instance;
 import weka.core.Instances;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by garciparedes on 03/11/2016.
@@ -23,13 +24,10 @@ public class Bootstrap extends AbstractSplitEstimator {
         this.samplingSize = instances.numInstances();
     }
 
-
-
-    public Bootstrap(Instances instances, int samplingSize) {
-        super(instances);
-        this.samplingSize = samplingSize;
+    public Bootstrap(Instances instances, Classifier... classifierList) {
+        super(instances, classifierList);
+        this.samplingSize = instances.numInstances();
     }
-
 
 
 

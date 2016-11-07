@@ -1,6 +1,7 @@
 package datamining.weka.estimation.cross;
 
 import datamining.weka.estimation.AbstractEstimator;
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
 
@@ -22,6 +23,10 @@ public class CrossValidation extends AbstractEstimator {
         this.folds = folds;
     }
 
+    public CrossValidation(Instances instances, int folds, Classifier... classifiers) {
+        super(instances, classifiers);
+        this.folds = folds;
+    }
 
     private int getFolds() {
         return folds;
@@ -29,11 +34,11 @@ public class CrossValidation extends AbstractEstimator {
 
 
     @Override
-    public double getErrorPercent() {
+    public double getErrorPercent(int i) {
         try {
             Evaluation eval = new Evaluation(getInstances());
 
-            eval.crossValidateModel(getClassifier(), getInstances(),
+            eval.crossValidateModel(getClassifier(i), getInstances(),
                     getFolds(), new Random()
             );
 
