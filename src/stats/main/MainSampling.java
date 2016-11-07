@@ -10,7 +10,7 @@ public class MainSampling {
 
 
     public static void main(String[] args) {
-        Integer[] numbers = loop(100000);
+        Integer[] numbers = loop(10000);
 
         SamplingWithReplacement<Integer> sampling =
                 new SamplingWithReplacement<>(numbers.length, numbers);
