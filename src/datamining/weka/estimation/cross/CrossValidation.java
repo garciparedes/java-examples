@@ -34,7 +34,12 @@ public class CrossValidation extends AbstractEstimator {
 
 
     @Override
-    public double getErrorPercent(int i) {
+    public String getEstimatorName() {
+        return super.getEstimatorName() + ": " + getFolds() + " folds";
+    }
+
+    @Override
+    protected Evaluation getEvaluation(int i) {
         try {
             Evaluation eval = new Evaluation(getInstances());
 
@@ -42,10 +47,10 @@ public class CrossValidation extends AbstractEstimator {
                     getFolds(), new Random()
             );
 
-            return eval.pctIncorrect();
+            return eval;
         } catch (Exception e) {
             e.printStackTrace();
-            return 100;
+            return null;
         }
     }
 }

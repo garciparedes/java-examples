@@ -40,7 +40,7 @@ public class HoldOut extends AbstractSplitEstimator {
 
     @Override
     public String getEstimatorName() {
-        return super.getEstimatorName() + " " + getSplitPercent() + " %";
+        return super.getEstimatorName() + ": " + getSplitPercent() + " %";
     }
 
     @Override

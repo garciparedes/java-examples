@@ -1,6 +1,7 @@
 package datamining.weka.estimation;
 
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -22,7 +23,7 @@ public abstract class AbstractEstimator {
 
     public AbstractEstimator(Instances instances, List<Classifier> classifierList) {
         this.instances = instances;
-        //this.instances.randomize(new Random(0));
+        this.instances.randomize(new Random(0));
         this.classifierList = classifierList;
     }
 
@@ -42,16 +43,15 @@ public abstract class AbstractEstimator {
         return getClassifier(0);
     }
 
-
     protected Classifier getClassifier(int i) {
         return getClassifierList().get(i);
     }
 
 
+
     private void setClassifier(Classifier classifier, int i){
         getClassifierList().add(i, classifier);
     }
-
 
     public void setClassifier(Classifier classifier) {
         this.setClassifier(classifier, 0);
@@ -63,17 +63,45 @@ public abstract class AbstractEstimator {
         return instances;
     }
 
-
-
     protected Instance getInstance(int i) {
         return getInstances().instance(i);
     }
 
-
-
     protected int getNumInstances(){
         return getInstances().numInstances();
     }
+
+
+
+
+    private List<Classifier> getClassifierList() {
+        return classifierList;
+    }
+
+    public void setClassifierList(List<Classifier> classifierList) {
+        this.classifierList = classifierList;
+    }
+
+
+
+
+    protected Evaluation getEvaluation(){
+        return getEvaluation(0);
+    }
+
+    protected abstract Evaluation getEvaluation(int i);
+
+
+
+    private double getErrorPercent(){
+        return getErrorPercent(0);
+    };
+
+    private double getErrorPercent(int i) {
+        return getEvaluation(i).pctIncorrect();
+    }
+
+
 
     public String getEstimatorName(){
         return getClass().getSimpleName();
@@ -87,12 +115,6 @@ public abstract class AbstractEstimator {
         return getClassifier(i).getClass().getSimpleName();
     }
 
-
-    public double getErrorPercent(){
-        return getErrorPercent(0);
-    };
-
-    public abstract double getErrorPercent(int i);
 
 
     public String getEstimatorEstimationResults(){
@@ -125,14 +147,5 @@ public abstract class AbstractEstimator {
         }
         string += ("**********************************************************************\n");
         return string;
-    }
-
-
-    public List<Classifier> getClassifierList() {
-        return classifierList;
-    }
-
-    public void setClassifierList(List<Classifier> classifierList) {
-        this.classifierList = classifierList;
     }
 }

@@ -1,6 +1,7 @@
 package datamining.weka.main;
 
 import datamining.weka.estimation.AbstractEstimator;
+import datamining.weka.estimation.cross.CrossValidation;
 import datamining.weka.estimation.split.HoldOut;
 import datamining.weka.util.DataImport;
 import weka.classifiers.bayes.NaiveBayes;
@@ -24,5 +25,12 @@ public class MainComparisonTests {
                 new HoldOut(instances, 0.66,
                         new J48(), new NaiveBayes());
         System.out.println(holdOutSet.getClassifiersErrors());
+
+        /*
+        AbstractEstimator crossValidationSet =
+                new CrossValidation(instances, 10,
+                        new J48(), new NaiveBayes());
+        System.out.println(crossValidationSet.getClassifiersErrors());
+        */
     }
 }

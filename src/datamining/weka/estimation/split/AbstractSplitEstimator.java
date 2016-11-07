@@ -7,6 +7,7 @@ import weka.classifiers.trees.adtree.ReferenceInstances;
 import weka.core.Instances;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by garciparedes on 03/11/2016.
@@ -61,10 +62,8 @@ abstract class AbstractSplitEstimator extends AbstractEstimator {
         this.testInstances = testInstances;
     }
 
-
-
     @Override
-    public double getErrorPercent(int i) {
+    protected Evaluation getEvaluation(int i) {
         this.splitInstances();
 
         try {
@@ -73,11 +72,10 @@ abstract class AbstractSplitEstimator extends AbstractEstimator {
             Evaluation eval = new Evaluation(getTestInstances());
             eval.evaluateModel(getClassifier(i), getTestInstances());
 
-            return eval.pctIncorrect();
-
+            return eval;
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            return null;
         }
     }
 }
